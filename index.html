@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Page Merger - รวมหน้า PDF</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .controls {
+            padding: 30px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .file-input {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .file-input-label {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .file-input-label:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+        }
+
+        .btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn.success {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        .btn.success:hover {
+            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+        }
+
+        .btn.sort {
+            background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+            box-shadow: 0 4px 15px rgba(52, 73, 94, 0.3);
+        }
+
+        .btn.sort:hover {
+            box-shadow: 0 6px 20px rgba(52, 73, 94, 0.4);
+        }
+
+        .file-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 1px solid #dee2e6;
+        }
+
+        .file-tag {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .file-tag .file-pages {
+            background: rgba(255,255,255,0.3);
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 11px;
+        }
+
+        .btn.download {
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+            box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3);
+        }
+
+        .btn.download:hover {
+            box-shadow: 0 6px 20px rgba(155, 89, 182, 0.4);
+        }
+
+        .btn.print-group {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+            padding: 10px 20px;
+            font-size: 14px;
+        }
+
+        .btn.print-group:hover {
+            box-shadow: 0 6px 20px rgba(243, 156, 18, 0.4);
+        }
+
+        .layout-selector {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .layout-selector select {
+            padding: 12px 20px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 16px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .gallery {
+            padding: 30px;
+            min-height: 400px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .page-group {
+            margin-bottom: 40px;
+            border: 2px solid #e1e8ed;
+            border-radius: 15px;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .page-group-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            border-radius: 10px;
+        }
+
+        .page-group-title {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            gap: 15px;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+        }
+
+        .page-slot {
+            aspect-ratio: 4/3;
+            border: 3px dashed #ddd;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .page-slot:hover {
+            border-color: #3498db;
+            background: #e3f2fd;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .page-slot.filled {
+            border-style: solid;
+            border-color: #27ae60;
+            background: white;
+        }
+
+        .page-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .page-number {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .remove-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 14px;
+            display: none;
+        }
+
+        .page-slot:hover .remove-btn {
+            display: block;
+        }
+
+        .empty-slot-text {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .empty-slot-icon {
+            font-size: 3em;
+            color: #bdc3c7;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #ecf0f1;
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .status-message {
+            text-align: center;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 10px 0;
+            display: none;
+        }
+
+        .status-message.success {
+            background: #d5f4e6;
+            color: #27ae60;
+            border: 1px solid #27ae60;
+        }
+
+        .status-message.error {
+            background: #fdeaea;
+            color: #e74c3c;
+            border: 1px solid #e74c3c;
+        }
+
+        @media print {
+            @page {
+                margin: 0;
+                size: A4 landscape;
+            }
+            
+            body {
+                margin: 0;
+                padding: 0;
+                background: white !important;
+            }
+            
+            .container, .header, .controls, .gallery, .status-message, .progress-bar {
+                display: none !important;
+            }
+            
+            .print-content {
+                display: block !important;
+                position: static !important;
+                width: 100% !important;
+                height: auto !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            
+            .print-page {
+                width: 100vw;
+                height: 100vh;
+                display: grid !important;
+                gap: 0;
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+                page-break-after: always;
+                page-break-inside: avoid;
+                background: white;
+                overflow: hidden;
+            }
+            
+            .print-page:last-child {
+                page-break-after: auto;
+            }
+            
+            .print-page-item {
+                box-sizing: border-box;
+                overflow: hidden;
+                background: white;
+                border: none;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .print-page-item img {
+                width: 100% !important;
+                height: 100% !important;
+                object-fit: contain !important;
+                display: block !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+        }
+
+        /* Layout classes */
+        .layout-1x1 { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+        .layout-1x2 { grid-template-columns: 1fr; grid-template-rows: repeat(2, 1fr); }
+        .layout-1x3 { grid-template-columns: 1fr; grid-template-rows: repeat(3, 1fr); }
+        .layout-1x4 { grid-template-columns: 1fr; grid-template-rows: repeat(4, 1fr); }
+        .layout-1x5 { grid-template-columns: 1fr; grid-template-rows: repeat(5, 1fr); }
+        .layout-1x6 { grid-template-columns: 1fr; grid-template-rows: repeat(6, 1fr); }
+        .layout-1x8 { grid-template-columns: 1fr; grid-template-rows: repeat(8, 1fr); }
+        
+        .layout-2x1 { grid-template-columns: repeat(2, 1fr); grid-template-rows: 1fr; }
+        .layout-2x2 { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); }
+        .layout-2x3 { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 1fr); }
+        .layout-2x4 { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(4, 1fr); }
+        .layout-2x5 { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(5, 1fr); }
+        .layout-2x6 { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(6, 1fr); }
+        
+        .layout-3x1 { grid-template-columns: repeat(3, 1fr); grid-template-rows: 1fr; }
+        .layout-3x2 { grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 1fr); }
+        .layout-3x3 { grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); }
+        .layout-3x4 { grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(4, 1fr); }
+        .layout-3x5 { grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(5, 1fr); }
+        
+        .layout-4x1 { grid-template-columns: repeat(4, 1fr); grid-template-rows: 1fr; }
+        .layout-4x2 { grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr); }
+        .layout-4x3 { grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(3, 1fr); }
+        .layout-4x4 { grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(4, 1fr); }
+        
+        .layout-5x1 { grid-template-columns: repeat(5, 1fr); grid-template-rows: 1fr; }
+        .layout-5x2 { grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(2, 1fr); }
+        .layout-5x3 { grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(3, 1fr); }
+        
+        .layout-6x1 { grid-template-columns: repeat(6, 1fr); grid-template-rows: 1fr; }
+        .layout-6x2 { grid-template-columns: repeat(6, 1fr); grid-template-rows: repeat(2, 1fr); }
+        
+        .layout-8x1 { grid-template-columns: repeat(8, 1fr); grid-template-rows: 1fr; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📄 PDF Page Merger</h1>
+            <p>รวมหน้า PDF หลายไฟล์เป็นหน้าเดียว และพิมพ์แยกทีละกลุ่ม</p>
+        </div>
+
+        <div class="controls">
+            <div class="file-input-wrapper">
+                <input type="file" id="pdfInput" class="file-input" accept=".pdf" multiple>
+                <label for="pdfInput" class="file-input-label">
+                    📁 เลือกไฟล์ PDF
+                </label>
+            </div>
+
+            <div class="layout-selector">
+                <label>เลย์เอาต์:</label>
+                <select id="layoutSelect">
+                    <optgroup label="หน้าเดียว (1 หน้า)">
+                        <option value="1x1">1×1 (1 หน้า)</option>
+                    </optgroup>
+                    <optgroup label="แนวตั้ง (2-8 หน้า)">
+                        <option value="1x2">1×2 (2 หน้า - แนวตั้ง)</option>
+                        <option value="1x3">1×3 (3 หน้า - แนวตั้ง)</option>
+                        <option value="1x4">1×4 (4 หน้า - แนวตั้ง)</option>
+                        <option value="1x5">1×5 (5 หน้า - แนวตั้ง)</option>
+                        <option value="1x6">1×6 (6 หน้า - แนวตั้ง)</option>
+                        <option value="1x8">1×8 (8 หน้า - แนวตั้ง)</option>
+                    </optgroup>
+                    <optgroup label="แนวนอน (2-8 หน้า)">
+                        <option value="2x1">2×1 (2 หน้า - แนวนอน)</option>
+                        <option value="3x1">3×1 (3 หน้า - แนวนอน)</option>
+                        <option value="4x1">4×1 (4 หน้า - แนวนอน)</option>
+                        <option value="5x1">5×1 (5 หน้า - แนวนอน)</option>
+                        <option value="6x1">6×1 (6 หน้า - แนวนอน)</option>
+                        <option value="8x1">8×1 (8 หน้า - แนวนอน)</option>
+                    </optgroup>
+                    <optgroup label="สี่เหลี่ยม (4-9 หน้า)">
+                        <option value="2x2">2×2 (4 หน้า)</option>
+                        <option value="3x3">3×3 (9 หน้า)</option>
+                        <option value="4x4">4×4 (16 หน้า)</option>
+                    </optgroup>
+                    <optgroup label="สี่เหลี่ยมผืนผ้า (6-12 หน้า)">
+                        <option value="2x3">2×3 (6 หน้า - แนวตั้ง)</option>
+                        <option value="3x2">3×2 (6 หน้า - แนวนอน)</option>
+                        <option value="2x4">2×4 (8 หน้า - แนวตั้ง)</option>
+                        <option value="4x2" selected>4×2 (8 หน้า - แนวนอน)</option>
+                        <option value="3x4">3×4 (12 หน้า - แนวตั้ง)</option>
+                        <option value="4x3">4×3 (12 หน้า - แนวนอน)</option>
+                        <option value="2x5">2×5 (10 หน้า - แนวตั้ง)</option>
+                        <option value="5x2">5×2 (10 หน้า - แนวนอน)</option>
+                        <option value="2x6">2×6 (12 หน้า - แนวตั้ง)</option>
+                        <option value="6x2">6×2 (12 หน้า - แนวนอน)</option>
+                        <option value="3x5">3×5 (15 หน้า - แนวนอน)</option>
+                        <option value="5x3">5×3 (15 หน้า - แนวนอน)</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <button id="clearBtn" class="btn">🗑️ ลบทั้งหมด</button>
+            <button id="sortBtn" class="btn" disabled>🔄 เรียงตามไฟล์</button>
+            <button id="printAllBtn" class="btn success" disabled>🖨️ พิมพ์ทั้งหมด</button>
+            <button id="downloadPdfBtn" class="btn success" disabled>📥 ดาวน์โหลด PDF</button>
+        </div>
+
+        <div class="progress-bar" id="progressBar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <div class="status-message" id="statusMessage"></div>
+
+        <div class="file-info" id="fileInfo" style="display: none;"></div>
+
+        <div class="gallery">
+            <div class="gallery-grid layout-4x2" id="gallery">
+                <!-- Page slots will be generated here -->
+            </div>
+        </div>
+    </div>
+
+    <div class="print-content" id="printContent" style="display: none;"></div>
+
+    <script>
+        class PDFMerger {
+            constructor() {
+                this.pages = [];
+                this.files = [];
+                this.maxPagesPerGroup = 8;
+                this.currentLayout = '4x2';
+                this.totalPages = 0;
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.generatePageSlots();
+                pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+            }
+
+            setupEventListeners() {
+                document.getElementById('pdfInput').addEventListener('change', (e) => this.handleFileSelect(e));
+                document.getElementById('layoutSelect').addEventListener('change', (e) => this.changeLayout(e));
+                document.getElementById('clearBtn').addEventListener('click', () => this.clearAll());
+                document.getElementById('sortBtn').addEventListener('click', () => this.sortByFile());
+                document.getElementById('printAllBtn').addEventListener('click', () => this.printAllPages());
+                document.getElementById('downloadPdfBtn').addEventListener('click', () => this.downloadAllPDF());
+            }
+
+            changeLayout(e) {
+                this.currentLayout = e.target.value;
+                const layouts = {
+                    '1x1': 1, '1x2': 2, '1x3': 3, '1x4': 4, '1x5': 5, '1x6': 6, '1x8': 8,
+                    '2x1': 2, '2x2': 4, '2x3': 6, '2x4': 8, '2x5': 10, '2x6': 12,
+                    '3x1': 3, '3x2': 6, '3x3': 9, '3x4': 12, '3x5': 15,
+                    '4x1': 4, '4x2': 8, '4x3': 12, '4x4': 16,
+                    '5x1': 5, '5x2': 10, '5x3': 15,
+                    '6x1': 6, '6x2': 12,
+                    '8x1': 8
+                };
+                this.maxPagesPerGroup = layouts[this.currentLayout];
+                this.generatePageSlots();
+            }
+
+            generatePageSlots() {
+                const gallery = document.getElementById('gallery');
+                gallery.innerHTML = '';
+                gallery.className = `gallery-grid layout-${this.currentLayout}`;
+
+                if (this.pages.length === 0) {
+                    this.createPageGroup(gallery, 0);
+                    this.updatePrintButtons();
+                    return;
+                }
+
+                const totalGroups = Math.ceil(this.pages.length / this.maxPagesPerGroup);
+                
+                for (let groupIndex = 0; groupIndex < totalGroups; groupIndex++) {
+                    this.createPageGroup(gallery, groupIndex);
+                }
+
+                this.updatePrintButtons();
+            }
+
+            createPageGroup(container, groupIndex) {
+                const groupDiv = document.createElement('div');
+                groupDiv.className = 'page-group';
+                
+                const header = document.createElement('div');
+                header.className = 'page-group-header';
+                
+                const title = document.createElement('div');
+                title.className = 'page-group-title';
+                title.textContent = `หน้าที่ ${groupIndex + 1} (${groupIndex * this.maxPagesPerGroup + 1} - ${(groupIndex + 1) * this.maxPagesPerGroup})`;
+                
+                const printBtn = document.createElement('button');
+                printBtn.className = 'btn print-group';
+                printBtn.innerHTML = '🖨️ พิมพ์หน้านี้';
+                
+                const downloadBtn = document.createElement('button');
+                downloadBtn.className = 'btn print-group download';
+                downloadBtn.innerHTML = '📥 PDF';
+                
+                const groupPages = this.pages.slice(
+                    groupIndex * this.maxPagesPerGroup, 
+                    (groupIndex + 1) * this.maxPagesPerGroup
+                ).filter(page => page);
+                
+                if (groupPages.length === 0) {
+                    printBtn.disabled = true;
+                    printBtn.innerHTML = '🖨️ ไม่มีหน้าที่จะพิมพ์';
+                    downloadBtn.disabled = true;
+                } else {
+                    printBtn.disabled = false;
+                    downloadBtn.disabled = false;
+                    printBtn.addEventListener('click', () => this.printGroup(groupIndex));
+                    downloadBtn.addEventListener('click', () => this.downloadGroupPDF(groupIndex));
+                }
+                
+                const buttonGroup = document.createElement('div');
+                buttonGroup.style.display = 'flex';
+                buttonGroup.style.gap = '10px';
+                buttonGroup.appendChild(printBtn);
+                buttonGroup.appendChild(downloadBtn);
+                
+                header.appendChild(title);
+                header.appendChild(buttonGroup);
+                groupDiv.appendChild(header);
+
+                const gridDiv = document.createElement('div');
+                gridDiv.className = `gallery-grid layout-${this.currentLayout}`;
+                
+                for (let i = 0; i < this.maxPagesPerGroup; i++) {
+                    const pageIndex = groupIndex * this.maxPagesPerGroup + i;
+                    const slot = document.createElement('div');
+                    slot.className = 'page-slot';
+                    slot.dataset.index = pageIndex;
+                    
+                    if (this.pages[pageIndex]) {
+                        this.renderPageInSlot(slot, this.pages[pageIndex], pageIndex);
+                    } else {
+                        slot.innerHTML = `
+                            <div class="empty-slot-icon">📄</div>
+                            <div class="empty-slot-text">ตำแหน่ง ${i + 1}<br>คลิกเพื่อเลือกไฟล์</div>
+                        `;
+                        slot.addEventListener('click', () => document.getElementById('pdfInput').click());
+                    }
+                    
+                    gridDiv.appendChild(slot);
+                }
+                
+                groupDiv.appendChild(gridDiv);
+                container.appendChild(groupDiv);
+            }
+
+            async handleFileSelect(e) {
+                const files = Array.from(e.target.files);
+                if (files.length === 0) return;
+
+                this.showProgress(true);
+                this.showStatus('กำลังประมวลผลไฟล์...', 'success');
+
+                try {
+                    for (const file of files) {
+                        const pages = await this.extractPagesFromPDF(file);
+                        
+                        const fileInfo = {
+                            name: file.name,
+                            pageCount: pages.length,
+                            startIndex: this.pages.length
+                        };
+                        this.files.push(fileInfo);
+                        
+                        for (const pageData of pages) {
+                            this.pages.push({
+                                image: pageData.image,
+                                fileName: file.name,
+                                pageNumber: pageData.pageNumber,
+                                fileIndex: this.files.length - 1,
+                                uploadOrder: this.pages.length
+                            });
+                        }
+                    }
+                    
+                    this.generatePageSlots();
+                    this.updateFileInfo();
+                    this.showStatus(`โหลดไฟล์เรียบร้อย! รวม ${this.pages.length} หน้า จาก ${files.length} ไฟล์`, 'success');
+                    
+                } catch (error) {
+                    console.error('Error processing PDF:', error);
+                    this.showStatus('เกิดข้อผิดพลาดในการโหลดไฟล์', 'error');
+                } finally {
