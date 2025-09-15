@@ -119,45 +119,6 @@
             box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
         }
 
-        .btn.sort {
-            background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
-            box-shadow: 0 4px 15px rgba(52, 73, 94, 0.3);
-        }
-
-        .btn.sort:hover {
-            box-shadow: 0 6px 20px rgba(52, 73, 94, 0.4);
-        }
-
-        .file-info {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 20px 0;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border: 1px solid #dee2e6;
-        }
-
-        .file-tag {
-            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .file-tag .file-pages {
-            background: rgba(255,255,255,0.3);
-            padding: 2px 6px;
-            border-radius: 10px;
-            font-size: 11px;
-        }
-
         .btn.download {
             background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
             box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3);
@@ -406,42 +367,24 @@
                 padding: 0 !important;
             }
         }
-
-        /* Layout classes */
         .layout-1x1 { grid-template-columns: 1fr; grid-template-rows: 1fr; }
         .layout-1x2 { grid-template-columns: 1fr; grid-template-rows: repeat(2, 1fr); }
         .layout-1x3 { grid-template-columns: 1fr; grid-template-rows: repeat(3, 1fr); }
         .layout-1x4 { grid-template-columns: 1fr; grid-template-rows: repeat(4, 1fr); }
-        .layout-1x5 { grid-template-columns: 1fr; grid-template-rows: repeat(5, 1fr); }
         .layout-1x6 { grid-template-columns: 1fr; grid-template-rows: repeat(6, 1fr); }
         .layout-1x8 { grid-template-columns: 1fr; grid-template-rows: repeat(8, 1fr); }
-        
         .layout-2x1 { grid-template-columns: repeat(2, 1fr); grid-template-rows: 1fr; }
-        .layout-2x2 { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); }
-        .layout-2x3 { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 1fr); }
-        .layout-2x4 { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(4, 1fr); }
-        .layout-2x5 { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(5, 1fr); }
-        .layout-2x6 { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(6, 1fr); }
-        
         .layout-3x1 { grid-template-columns: repeat(3, 1fr); grid-template-rows: 1fr; }
-        .layout-3x2 { grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 1fr); }
-        .layout-3x3 { grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); }
-        .layout-3x4 { grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(4, 1fr); }
-        .layout-3x5 { grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(5, 1fr); }
-        
         .layout-4x1 { grid-template-columns: repeat(4, 1fr); grid-template-rows: 1fr; }
-        .layout-4x2 { grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr); }
-        .layout-4x3 { grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(3, 1fr); }
-        .layout-4x4 { grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(4, 1fr); }
-        
-        .layout-5x1 { grid-template-columns: repeat(5, 1fr); grid-template-rows: 1fr; }
-        .layout-5x2 { grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(2, 1fr); }
-        .layout-5x3 { grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(3, 1fr); }
-        
         .layout-6x1 { grid-template-columns: repeat(6, 1fr); grid-template-rows: 1fr; }
-        .layout-6x2 { grid-template-columns: repeat(6, 1fr); grid-template-rows: repeat(2, 1fr); }
-        
         .layout-8x1 { grid-template-columns: repeat(8, 1fr); grid-template-rows: 1fr; }
+        .layout-2x2 { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); }
+        .layout-3x3 { grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); }
+        .layout-4x4 { grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(4, 1fr); }
+        .layout-2x3 { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 1fr); }
+        .layout-3x2 { grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 1fr); }
+        .layout-2x4 { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(4, 1fr); }
+        .layout-4x2 { grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr); }
     </style>
 </head>
 <body>
@@ -462,49 +405,36 @@
             <div class="layout-selector">
                 <label>เลย์เอาต์:</label>
                 <select id="layoutSelect">
-                    <optgroup label="หน้าเดียว (1 หน้า)">
+                    <optgroup label="แนวตั้ง">
                         <option value="1x1">1×1 (1 หน้า)</option>
+                        <option value="1x2">1×2 (2 หน้า)</option>
+                        <option value="1x3">1×3 (3 หน้า)</option>
+                        <option value="1x4">1×4 (4 หน้า)</option>
+                        <option value="1x6">1×6 (6 หน้า)</option>
+                        <option value="1x8">1×8 (8 หน้า)</option>
                     </optgroup>
-                    <optgroup label="แนวตั้ง (2-8 หน้า)">
-                        <option value="1x2">1×2 (2 หน้า - แนวตั้ง)</option>
-                        <option value="1x3">1×3 (3 หน้า - แนวตั้ง)</option>
-                        <option value="1x4">1×4 (4 หน้า - แนวตั้ง)</option>
-                        <option value="1x5">1×5 (5 หน้า - แนวตั้ง)</option>
-                        <option value="1x6">1×6 (6 หน้า - แนวตั้ง)</option>
-                        <option value="1x8">1×8 (8 หน้า - แนวตั้ง)</option>
+                    <optgroup label="แนวนอน">
+                        <option value="2x1">2×1 (2 หน้า)</option>
+                        <option value="3x1">3×1 (3 หน้า)</option>
+                        <option value="4x1">4×1 (4 หน้า)</option>
+                        <option value="6x1">6×1 (6 หน้า)</option>
+                        <option value="8x1">8×1 (8 หน้า)</option>
                     </optgroup>
-                    <optgroup label="แนวนอน (2-8 หน้า)">
-                        <option value="2x1">2×1 (2 หน้า - แนวนอน)</option>
-                        <option value="3x1">3×1 (3 หน้า - แนวนอน)</option>
-                        <option value="4x1">4×1 (4 หน้า - แนวนอน)</option>
-                        <option value="5x1">5×1 (5 หน้า - แนวนอน)</option>
-                        <option value="6x1">6×1 (6 หน้า - แนวนอน)</option>
-                        <option value="8x1">8×1 (8 หน้า - แนวนอน)</option>
-                    </optgroup>
-                    <optgroup label="สี่เหลี่ยม (4-9 หน้า)">
+                    <optgroup label="สี่เหลี่ยม">
                         <option value="2x2">2×2 (4 หน้า)</option>
                         <option value="3x3">3×3 (9 หน้า)</option>
                         <option value="4x4">4×4 (16 หน้า)</option>
                     </optgroup>
-                    <optgroup label="สี่เหลี่ยมผืนผ้า (6-12 หน้า)">
-                        <option value="2x3">2×3 (6 หน้า - แนวตั้ง)</option>
-                        <option value="3x2">3×2 (6 หน้า - แนวนอน)</option>
-                        <option value="2x4">2×4 (8 หน้า - แนวตั้ง)</option>
-                        <option value="4x2" selected>4×2 (8 หน้า - แนวนอน)</option>
-                        <option value="3x4">3×4 (12 หน้า - แนวตั้ง)</option>
-                        <option value="4x3">4×3 (12 หน้า - แนวนอน)</option>
-                        <option value="2x5">2×5 (10 หน้า - แนวตั้ง)</option>
-                        <option value="5x2">5×2 (10 หน้า - แนวนอน)</option>
-                        <option value="2x6">2×6 (12 หน้า - แนวตั้ง)</option>
-                        <option value="6x2">6×2 (12 หน้า - แนวนอน)</option>
-                        <option value="3x5">3×5 (15 หน้า - แนวนอน)</option>
-                        <option value="5x3">5×3 (15 หน้า - แนวนอน)</option>
+                    <optgroup label="สี่เหลี่ยมผืนผ้า">
+                        <option value="2x3">2×3 (6 หน้า)</option>
+                        <option value="3x2">3×2 (6 หน้า)</option>
+                        <option value="2x4">2×4 (8 หน้า)</option>
+                        <option value="4x2">4×2 (8 หน้า)</option>
                     </optgroup>
                 </select>
             </div>
 
             <button id="clearBtn" class="btn">🗑️ ลบทั้งหมด</button>
-            <button id="sortBtn" class="btn" disabled>🔄 เรียงตามไฟล์</button>
             <button id="printAllBtn" class="btn success" disabled>🖨️ พิมพ์ทั้งหมด</button>
             <button id="downloadPdfBtn" class="btn success" disabled>📥 ดาวน์โหลด PDF</button>
         </div>
@@ -515,10 +445,8 @@
 
         <div class="status-message" id="statusMessage"></div>
 
-        <div class="file-info" id="fileInfo" style="display: none;"></div>
-
         <div class="gallery">
-            <div class="gallery-grid layout-4x2" id="gallery">
+            <div class="gallery-grid layout-2x4" id="gallery">
                 <!-- Page slots will be generated here -->
             </div>
         </div>
@@ -530,7 +458,6 @@
         class PDFMerger {
             constructor() {
                 this.pages = [];
-                this.files = [];
                 this.maxPagesPerGroup = 8;
                 this.currentLayout = '4x2';
                 this.totalPages = 0;
@@ -547,7 +474,6 @@
                 document.getElementById('pdfInput').addEventListener('change', (e) => this.handleFileSelect(e));
                 document.getElementById('layoutSelect').addEventListener('change', (e) => this.changeLayout(e));
                 document.getElementById('clearBtn').addEventListener('click', () => this.clearAll());
-                document.getElementById('sortBtn').addEventListener('click', () => this.sortByFile());
                 document.getElementById('printAllBtn').addEventListener('click', () => this.printAllPages());
                 document.getElementById('downloadPdfBtn').addEventListener('click', () => this.downloadAllPDF());
             }
@@ -555,13 +481,10 @@
             changeLayout(e) {
                 this.currentLayout = e.target.value;
                 const layouts = {
-                    '1x1': 1, '1x2': 2, '1x3': 3, '1x4': 4, '1x5': 5, '1x6': 6, '1x8': 8,
-                    '2x1': 2, '2x2': 4, '2x3': 6, '2x4': 8, '2x5': 10, '2x6': 12,
-                    '3x1': 3, '3x2': 6, '3x3': 9, '3x4': 12, '3x5': 15,
-                    '4x1': 4, '4x2': 8, '4x3': 12, '4x4': 16,
-                    '5x1': 5, '5x2': 10, '5x3': 15,
-                    '6x1': 6, '6x2': 12,
-                    '8x1': 8
+                    '1x1': 1, '1x2': 2, '1x3': 3, '1x4': 4, '1x6': 6, '1x8': 8,
+                    '2x1': 2, '3x1': 3, '4x1': 4, '6x1': 6, '8x1': 8,
+                    '2x2': 4, '3x3': 9, '4x4': 16,
+                    '2x3': 6, '3x2': 6, '2x4': 8, '4x2': 8
                 };
                 this.maxPagesPerGroup = layouts[this.currentLayout];
                 this.generatePageSlots();
@@ -570,9 +493,9 @@
             generatePageSlots() {
                 const gallery = document.getElementById('gallery');
                 gallery.innerHTML = '';
-                gallery.className = `gallery-grid layout-${this.currentLayout}`;
 
                 if (this.pages.length === 0) {
+                    // Show first empty group
                     this.createPageGroup(gallery, 0);
                     this.updatePrintButtons();
                     return;
@@ -606,6 +529,7 @@
                 downloadBtn.className = 'btn print-group download';
                 downloadBtn.innerHTML = '📥 PDF';
                 
+                // Check if this group has any pages
                 const groupPages = this.pages.slice(
                     groupIndex * this.maxPagesPerGroup, 
                     (groupIndex + 1) * this.maxPagesPerGroup
@@ -669,29 +593,450 @@
                     for (const file of files) {
                         const pages = await this.extractPagesFromPDF(file);
                         
-                        const fileInfo = {
-                            name: file.name,
-                            pageCount: pages.length,
-                            startIndex: this.pages.length
-                        };
-                        this.files.push(fileInfo);
-                        
                         for (const pageData of pages) {
                             this.pages.push({
                                 image: pageData.image,
                                 fileName: file.name,
-                                pageNumber: pageData.pageNumber,
-                                fileIndex: this.files.length - 1,
-                                uploadOrder: this.pages.length
+                                pageNumber: pageData.pageNumber
                             });
                         }
                     }
                     
                     this.generatePageSlots();
-                    this.updateFileInfo();
-                    this.showStatus(`โหลดไฟล์เรียบร้อย! รวม ${this.pages.length} หน้า จาก ${files.length} ไฟล์`, 'success');
+                    this.showStatus(`โหลดไฟล์เรียบร้อย! รวม ${this.pages.length} หน้า`, 'success');
                     
                 } catch (error) {
                     console.error('Error processing PDF:', error);
                     this.showStatus('เกิดข้อผิดพลาดในการโหลดไฟล์', 'error');
                 } finally {
+                    this.showProgress(false);
+                    e.target.value = '';
+                }
+            }
+
+            async extractPagesFromPDF(file) {
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
+                const pages = [];
+
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const scale = 2;
+                    const viewport = page.getViewport({ scale });
+                    
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+
+                    await page.render({
+                        canvasContext: context,
+                        viewport: viewport
+                    }).promise;
+
+                    pages.push({
+                        image: canvas.toDataURL('image/jpeg', 0.8),
+                        pageNumber: i
+                    });
+                }
+
+                return pages;
+            }
+
+            renderPageInSlot(slot, pageData, index) {
+                slot.className = 'page-slot filled';
+                const displayNumber = (index % this.maxPagesPerGroup) + 1;
+                slot.innerHTML = `
+                    <img src="${pageData.image}" alt="Page ${pageData.pageNumber}" class="page-image">
+                    <div class="page-number">${displayNumber}</div>
+                    <button class="remove-btn" onclick="pdfMerger.removePage(${index})">×</button>
+                `;
+            }
+
+            removePage(index) {
+                this.pages.splice(index, 1);
+                this.generatePageSlots();
+            }
+
+            clearAll() {
+                this.pages = [];
+                this.generatePageSlots();
+                this.showStatus('ลบข้อมูลทั้งหมดแล้ว', 'success');
+            }
+
+            printGroup(groupIndex) {
+                const startIndex = groupIndex * this.maxPagesPerGroup;
+                const endIndex = Math.min(startIndex + this.maxPagesPerGroup, this.pages.length);
+                const groupPages = this.pages.slice(startIndex, endIndex);
+
+                if (groupPages.length === 0) {
+                    this.showStatus('ไม่มีหน้าที่จะพิมพ์ในกลุ่มนี้', 'error');
+                    return;
+                }
+
+                this.showStatus(`กำลังเตรียมพิมพ์หน้าที่ ${groupIndex + 1} (${groupPages.length} หน้า)`, 'success');
+                this.generatePrintContent(groupPages);
+                
+                const printContent = document.getElementById('printContent');
+                printContent.style.display = 'block';
+                printContent.style.position = 'fixed';
+                printContent.style.top = '0';
+                printContent.style.left = '0';
+                printContent.style.width = '100%';
+                printContent.style.height = '100%';
+                printContent.style.zIndex = '9999';
+                printContent.style.background = 'white';
+                
+                setTimeout(() => {
+                    window.print();
+                    
+                    setTimeout(() => {
+                        printContent.style.display = 'none';
+                        printContent.style.position = 'static';
+                        printContent.style.zIndex = 'auto';
+                    }, 1000);
+                }, 500);
+            }
+
+            printAllPages() {
+                if (this.pages.length === 0) {
+                    this.showStatus('กรุณาเพิ่มหน้า PDF ก่อนพิมพ์', 'error');
+                    return;
+                }
+
+                const totalGroups = Math.ceil(this.pages.length / this.maxPagesPerGroup);
+                this.showStatus(`กำลังเตรียมการพิมพ์ทั้งหมด ${totalGroups} หน้า...`, 'success');
+
+                this.generatePrintContentAll();
+                
+                const printContent = document.getElementById('printContent');
+                printContent.style.display = 'block';
+                printContent.style.position = 'fixed';
+                printContent.style.top = '0';
+                printContent.style.left = '0';
+                printContent.style.width = '100%';
+                printContent.style.height = '100%';
+                printContent.style.zIndex = '9999';
+                printContent.style.background = 'white';
+                
+                setTimeout(() => {
+                    window.print();
+                    
+                    setTimeout(() => {
+                        printContent.style.display = 'none';
+                        printContent.style.position = 'static';
+                        printContent.style.zIndex = 'auto';
+                    }, 1000);
+                }, 500);
+            }
+
+            generatePrintContent(pages) {
+                const printContent = document.getElementById('printContent');
+                const layouts = {
+                    '1x1': { cols: 1, rows: 1, gridTemplate: '1fr / 1fr' },
+                    '1x2': { cols: 1, rows: 2, gridTemplate: 'repeat(2, 1fr) / 1fr' },
+                    '1x3': { cols: 1, rows: 3, gridTemplate: 'repeat(3, 1fr) / 1fr' },
+                    '1x4': { cols: 1, rows: 4, gridTemplate: 'repeat(4, 1fr) / 1fr' },
+                    '1x6': { cols: 1, rows: 6, gridTemplate: 'repeat(6, 1fr) / 1fr' },
+                    '1x8': { cols: 1, rows: 8, gridTemplate: 'repeat(8, 1fr) / 1fr' },
+                    '2x1': { cols: 2, rows: 1, gridTemplate: '1fr / repeat(2, 1fr)' },
+                    '3x1': { cols: 3, rows: 1, gridTemplate: '1fr / repeat(3, 1fr)' },
+                    '4x1': { cols: 4, rows: 1, gridTemplate: '1fr / repeat(4, 1fr)' },
+                    '6x1': { cols: 6, rows: 1, gridTemplate: '1fr / repeat(6, 1fr)' },
+                    '8x1': { cols: 8, rows: 1, gridTemplate: '1fr / repeat(8, 1fr)' },
+                    '2x2': { cols: 2, rows: 2, gridTemplate: 'repeat(2, 1fr) / repeat(2, 1fr)' },
+                    '3x3': { cols: 3, rows: 3, gridTemplate: 'repeat(3, 1fr) / repeat(3, 1fr)' },
+                    '4x4': { cols: 4, rows: 4, gridTemplate: 'repeat(4, 1fr) / repeat(4, 1fr)' },
+                    '2x3': { cols: 2, rows: 3, gridTemplate: 'repeat(3, 1fr) / repeat(2, 1fr)' },
+                    '3x2': { cols: 3, rows: 2, gridTemplate: 'repeat(2, 1fr) / repeat(3, 1fr)' },
+                    '2x4': { cols: 2, rows: 4, gridTemplate: 'repeat(4, 1fr) / repeat(2, 1fr)' },
+                    '4x2': { cols: 4, rows: 2, gridTemplate: 'repeat(2, 1fr) / repeat(4, 1fr)' }
+                };
+                
+                const layout = layouts[this.currentLayout];
+
+                // Create grid items for the specific group pages
+                const pageItems = [];
+                for (let i = 0; i < this.maxPagesPerGroup; i++) {
+                    if (pages[i]) {
+                        pageItems.push(`<div class="print-page-item">
+                            <img src="${pages[i].image}" alt="Page ${i + 1}">
+                        </div>`);
+                    } else {
+                        pageItems.push(`<div class="print-page-item"></div>`);
+                    }
+                }
+
+                printContent.innerHTML = `
+                    <div class="print-page" style="grid-template: ${layout.gridTemplate};">
+                        ${pageItems.join('')}
+                    </div>
+                `;
+            }
+
+            generatePrintContentAll() {
+                const printContent = document.getElementById('printContent');
+                const layouts = {
+                    '1x1': { cols: 1, rows: 1, gridTemplate: '1fr / 1fr' },
+                    '1x2': { cols: 1, rows: 2, gridTemplate: 'repeat(2, 1fr) / 1fr' },
+                    '1x3': { cols: 1, rows: 3, gridTemplate: 'repeat(3, 1fr) / 1fr' },
+                    '1x4': { cols: 1, rows: 4, gridTemplate: 'repeat(4, 1fr) / 1fr' },
+                    '1x6': { cols: 1, rows: 6, gridTemplate: 'repeat(6, 1fr) / 1fr' },
+                    '1x8': { cols: 1, rows: 8, gridTemplate: 'repeat(8, 1fr) / 1fr' },
+                    '2x1': { cols: 2, rows: 1, gridTemplate: '1fr / repeat(2, 1fr)' },
+                    '3x1': { cols: 3, rows: 1, gridTemplate: '1fr / repeat(3, 1fr)' },
+                    '4x1': { cols: 4, rows: 1, gridTemplate: '1fr / repeat(4, 1fr)' },
+                    '6x1': { cols: 6, rows: 1, gridTemplate: '1fr / repeat(6, 1fr)' },
+                    '8x1': { cols: 8, rows: 1, gridTemplate: '1fr / repeat(8, 1fr)' },
+                    '2x2': { cols: 2, rows: 2, gridTemplate: 'repeat(2, 1fr) / repeat(2, 1fr)' },
+                    '3x3': { cols: 3, rows: 3, gridTemplate: 'repeat(3, 1fr) / repeat(3, 1fr)' },
+                    '4x4': { cols: 4, rows: 4, gridTemplate: 'repeat(4, 1fr) / repeat(4, 1fr)' },
+                    '2x3': { cols: 2, rows: 3, gridTemplate: 'repeat(3, 1fr) / repeat(2, 1fr)' },
+                    '3x2': { cols: 3, rows: 2, gridTemplate: 'repeat(2, 1fr) / repeat(3, 1fr)' },
+                    '2x4': { cols: 2, rows: 4, gridTemplate: 'repeat(4, 1fr) / repeat(2, 1fr)' },
+                    '4x2': { cols: 4, rows: 2, gridTemplate: 'repeat(2, 1fr) / repeat(4, 1fr)' }
+                };
+                
+                const layout = layouts[this.currentLayout];
+                const totalGroups = Math.ceil(this.pages.length / this.maxPagesPerGroup);
+                
+                let allPrintPages = '';
+
+                for (let groupIndex = 0; groupIndex < totalGroups; groupIndex++) {
+                    const startIndex = groupIndex * this.maxPagesPerGroup;
+                    const groupPages = this.pages.slice(startIndex, startIndex + this.maxPagesPerGroup);
+                    
+                    const pageItems = [];
+                    for (let i = 0; i < this.maxPagesPerGroup; i++) {
+                        if (groupPages[i]) {
+                            pageItems.push(`<div class="print-page-item">
+                                <img src="${groupPages[i].image}" alt="Page ${i + 1}">
+                            </div>`);
+                        } else {
+                            pageItems.push(`<div class="print-page-item"></div>`);
+                        }
+                    }
+
+                    allPrintPages += `
+                        <div class="print-page" style="grid-template: ${layout.gridTemplate};">
+                            ${pageItems.join('')}
+                        </div>
+                    `;
+                }
+
+                printContent.innerHTML = allPrintPages;
+            }
+
+            async downloadGroupPDF(groupIndex) {
+                const startIndex = groupIndex * this.maxPagesPerGroup;
+                const endIndex = Math.min(startIndex + this.maxPagesPerGroup, this.pages.length);
+                const groupPages = this.pages.slice(startIndex, endIndex);
+
+                if (groupPages.length === 0) {
+                    this.showStatus('ไม่มีหน้าที่จะสร้าง PDF ในกลุ่มนี้', 'error');
+                    return;
+                }
+
+                try {
+                    this.showStatus(`กำลังสร้าง PDF หน้าที่ ${groupIndex + 1}...`, 'success');
+                    this.showProgress(true);
+
+                    const pdf = await this.createPDFFromPages(groupPages);
+                    const pdfBytes = await pdf.save();
+                    
+                    // Download the PDF
+                    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = `merged-pages-group-${groupIndex + 1}.pdf`;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(url);
+
+                    this.showStatus(`ดาวน์โหลด PDF หน้าที่ ${groupIndex + 1} เรียบร้อย!`, 'success');
+                } catch (error) {
+                    console.error('Error creating PDF:', error);
+                    this.showStatus('เกิดข้อผิดพลาดในการสร้าง PDF', 'error');
+                } finally {
+                    this.showProgress(false);
+                }
+            }
+
+            async downloadAllPDF() {
+                if (this.pages.length === 0) {
+                    this.showStatus('กรุณาเพิ่มหน้า PDF ก่อนดาวน์โหลด', 'error');
+                    return;
+                }
+
+                try {
+                    const totalGroups = Math.ceil(this.pages.length / this.maxPagesPerGroup);
+                    this.showStatus(`กำลังสร้าง PDF รวม ${totalGroups} หน้า...`, 'success');
+                    this.showProgress(true);
+
+                    const pdf = await PDFLib.PDFDocument.create();
+                    
+                    // Process each group
+                    for (let groupIndex = 0; groupIndex < totalGroups; groupIndex++) {
+                        const startIndex = groupIndex * this.maxPagesPerGroup;
+                        const groupPages = this.pages.slice(startIndex, startIndex + this.maxPagesPerGroup);
+                        
+                        const groupPdf = await this.createPDFFromPages(groupPages);
+                        const [page] = await pdf.copyPages(groupPdf, [0]);
+                        pdf.addPage(page);
+                    }
+                    
+                    const pdfBytes = await pdf.save();
+                    
+                    // Download the PDF
+                    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = `merged-pages-all.pdf`;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(url);
+
+                    this.showStatus(`ดาวน์โหลด PDF รวมทั้งหมดเรียบร้อย!`, 'success');
+                } catch (error) {
+                    console.error('Error creating PDF:', error);
+                    this.showStatus('เกิดข้อผิดพลาดในการสร้าง PDF', 'error');
+                } finally {
+                    this.showProgress(false);
+                }
+            }
+
+            async createPDFFromPages(pages) {
+                const pdf = await PDFLib.PDFDocument.create();
+                const layouts = {
+                    '1x1': { cols: 1, rows: 1, pageSize: [595.28, 841.89] },
+                    '1x2': { cols: 1, rows: 2, pageSize: [595.28, 841.89] },
+                    '1x3': { cols: 1, rows: 3, pageSize: [595.28, 841.89] },
+                    '1x4': { cols: 1, rows: 4, pageSize: [595.28, 841.89] },
+                    '1x6': { cols: 1, rows: 6, pageSize: [595.28, 841.89] },
+                    '1x8': { cols: 1, rows: 8, pageSize: [595.28, 841.89] },
+                    '2x1': { cols: 2, rows: 1, pageSize: [841.89, 595.28] },
+                    '3x1': { cols: 3, rows: 1, pageSize: [841.89, 595.28] },
+                    '4x1': { cols: 4, rows: 1, pageSize: [841.89, 595.28] },
+                    '6x1': { cols: 6, rows: 1, pageSize: [841.89, 595.28] },
+                    '8x1': { cols: 8, rows: 1, pageSize: [841.89, 595.28] },
+                    '2x2': { cols: 2, rows: 2, pageSize: [595.28, 595.28] },
+                    '3x3': { cols: 3, rows: 3, pageSize: [595.28, 595.28] },
+                    '4x4': { cols: 4, rows: 4, pageSize: [595.28, 595.28] },
+                    '2x3': { cols: 2, rows: 3, pageSize: [595.28, 841.89] },
+                    '3x2': { cols: 3, rows: 2, pageSize: [841.89, 595.28] },
+                    '2x4': { cols: 2, rows: 4, pageSize: [595.28, 841.89] },
+                    '4x2': { cols: 4, rows: 2, pageSize: [841.89, 595.28] }
+                };
+                const layout = layouts[this.currentLayout];
+                const [pageWidth, pageHeight] = layout.pageSize;
+                const page = pdf.addPage([pageWidth, pageHeight]);
+                
+                const cellWidth = pageWidth / layout.cols;
+                const cellHeight = pageHeight / layout.rows;
+                
+                // Add images to the page
+                for (let i = 0; i < Math.min(pages.length, this.maxPagesPerGroup); i++) {
+                    if (!pages[i]) continue;
+                    
+                    try {
+                        // Convert data URL to bytes
+                        const imageData = pages[i].image.split(',')[1];
+                        const imageBytes = Uint8Array.from(atob(imageData), c => c.charCodeAt(0));
+                        
+                        // Embed image
+                        const image = await pdf.embedJpg(imageBytes);
+                        
+                        // Calculate position
+                        const row = Math.floor(i / layout.cols);
+                        const col = i % layout.cols;
+                        
+                        const x = col * cellWidth;
+                        const y = pageHeight - ((row + 1) * cellHeight); // PDF coordinates start from bottom
+                        
+                        // Calculate image dimensions to fit in cell while maintaining aspect ratio
+                        const imageDims = image.scale(Math.min(
+                            cellWidth / image.width,
+                            cellHeight / image.height
+                        ));
+                        
+                        // Center the image in the cell
+                        const imageX = x + (cellWidth - imageDims.width) / 2;
+                        const imageY = y + (cellHeight - imageDims.height) / 2;
+                        
+                        page.drawImage(image, {
+                            x: imageX,
+                            y: imageY,
+                            width: imageDims.width,
+                            height: imageDims.height,
+                        });
+                    } catch (error) {
+                        console.error('Error adding image to PDF:', error);
+                    }
+                }
+                
+                return pdf;
+            }
+
+            updatePrintButtons() {
+                const hasPages = this.pages.length > 0;
+                const printAllBtn = document.getElementById('printAllBtn');
+                const downloadPdfBtn = document.getElementById('downloadPdfBtn');
+                
+                printAllBtn.disabled = !hasPages;
+                downloadPdfBtn.disabled = !hasPages;
+                
+                if (hasPages) {
+                    const totalGroups = Math.ceil(this.pages.length / this.maxPagesPerGroup);
+                    printAllBtn.textContent = `🖨️ พิมพ์ทั้งหมด (${totalGroups} หน้า)`;
+                    downloadPdfBtn.textContent = `📥 ดาวน์โหลด PDF (${totalGroups} หน้า)`;
+                } else {
+                    printAllBtn.textContent = '🖨️ พิมพ์ทั้งหมด';
+                    downloadPdfBtn.textContent = '📥 ดาวน์โหลด PDF';
+                }
+            }
+
+            showProgress(show) {
+                const progressBar = document.getElementById('progressBar');
+                const progressFill = document.getElementById('progressFill');
+                
+                if (show) {
+                    progressBar.style.display = 'block';
+                    let progress = 0;
+                    const interval = setInterval(() => {
+                        progress += 10;
+                        progressFill.style.width = progress + '%';
+                        if (progress >= 100) {
+                            clearInterval(interval);
+                            setTimeout(() => {
+                                progressBar.style.display = 'none';
+                                progressFill.style.width = '0%';
+                            }, 500);
+                        }
+                    }, 100);
+                } else {
+                    progressBar.style.display = 'none';
+                    progressFill.style.width = '0%';
+                }
+            }
+
+            showStatus(message, type) {
+                const statusDiv = document.getElementById('statusMessage');
+                statusDiv.textContent = message;
+                statusDiv.className = `status-message ${type}`;
+                statusDiv.style.display = 'block';
+                
+                setTimeout(() => {
+                    statusDiv.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        // Initialize the PDF Merger
+        const pdfMerger = new PDFMerger();
+    </script>
+</body>
+</html>
